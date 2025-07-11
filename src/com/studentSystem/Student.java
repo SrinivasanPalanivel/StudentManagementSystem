@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.studentSystem.Main.verifyStudentID;
+
 public class Student {
 
     private String name;
@@ -69,13 +71,18 @@ public class Student {
     }
 
     public boolean validateStudentId(String studentId) {
-        String studentIdRegex = "S-[0-9]+$";
-        Pattern studentIdPattern = Pattern.compile(studentIdRegex);
-        Matcher studentIdMatcher  = studentIdPattern.matcher(studentId);
-        if(studentIdMatcher.matches()) {
-            return true;
+        if(!verifyStudentID(studentId)) {
+            String studentIdRegex = "S-[0-9]+$";
+            Pattern studentIdPattern = Pattern.compile(studentIdRegex);
+            Matcher studentIdMatcher  = studentIdPattern.matcher(studentId);
+            if(studentIdMatcher.matches()) {
+                return true;
+            } else {
+                System.err.println("Invalid ID!!! Student ID must contain only digits along with S-.. Eg:S-123");
+                return false;
+            }
         } else {
-            System.err.println("Invalid ID!!! Student ID must contain only digits along with S-.. Eg:S-123");
+            System.err.println("Student ID already exists!!! Please enter a unique Student ID");
             return false;
         }
     }
@@ -87,6 +94,7 @@ public class Student {
         coursesList.add("C#");
         coursesList.add("DevOps");
         coursesList.add("Ruby");
+        coursesList.add("JavaScript");
         return coursesList;
     }
 
